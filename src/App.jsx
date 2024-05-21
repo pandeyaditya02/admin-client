@@ -1,39 +1,32 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { themeSettings } from "@/theme";
-import Layout from "@/scenes/layout";
-import Dashboard from "@/scenes/dashboard";
-import Employee from "@/scenes/employee";
-import Departments from "@/scenes/departments";
-import Org from "@/scenes/org";
-import Signin from "@/scenes/signin";
-import Signup from "@/scenes/signup";
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './app/store';
+import Register from './components/Register';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
+import AddTrain from './components/AddTrain';
+import ViewTrains from './components/ViewTrains';
+import SearchTrains from './components/SearchTrain';
 
-function App() {
-  const mode = useSelector((state) => state.global.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+const App = () => {
   return (
-    <div className="app">
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+    <Provider store={store}>
+      <Router>
+        <div>
           <Routes>
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/employee" element={<Employee />} />
-              <Route path="/departments" element={<Departments />} />
-              <Route path="/org" element={<Org />} />
-            </Route>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/add-train" element={<AddTrain />} />
+            <Route path="/view-trains" element={<ViewTrains />} />
+            <Route path="/search-trains" element={<SearchTrains />} />
           </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
-    </div>
+        </div>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
